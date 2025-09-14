@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Robot PDF Q&A Chatbot</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f7fa;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .chat-container {
+      width: 400px;
+      max-width: 90%;
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0px 4px 20px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .chat-header {
+      background: #4a90e2;
+      color: white;
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .robot {
+      font-size: 30px;
+    }
+    .chat-box {
+      flex: 1;
+      padding: 15px;
+      overflow-y: auto;
+      background: #f9fbfd;
+    }
+    .message {
+      margin: 10px 0;
+      padding: 10px 14px;
+      border-radius: 10px;
+      max-width: 80%;
+      word-wrap: break-word;
+    }
+    .user-message {
+      background: #e0f7fa;
+      align-self: flex-end;
+    }
+    .bot-message {
+      background: #dcedc8;
+      align-self: flex-start;
+    }
+    .chat-input {
+      display: flex;
+      gap: 5px;
+      padding: 10px;
+      background: #f1f1f1;
+    }
+    .chat-input input[type="text"] {
+      flex: 1;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+    .chat-input button {
+      background: #4a90e2;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .chat-input button:hover {
+      background: #357ab8;
+    }
+  </style>
+</head>
+<body>
+
+<div class="chat-container">
+  <div class="chat-header">
+    <span class="robot">🤖</span>
+    <h3>DocBot</h3>
+  </div>
+  
+  <div class="chat-box" id="chat-box">
+    <div class="bot-message message">Hello human! Please upload a PDF document for me to analyze 📄</div>
+  </div>
+
+  <div class="chat-input">
+    <input type="file" id="pdfUpload" accept="application/pdf" />
+  </div>
+  
+  <div class="chat-input">
+    <input type="text" id="userInput" placeholder="Ask me something about the document..." />
+    <button onclick="sendMessage()">Send</button>
+  </div>
+</div>
+
+<script>
+  const chatBox = document.getElementById("chat-box");
+
+  function addMessage(content, isUser=false) {
+    const msg = document.createElement("div");
+    msg.classList.add("message", isUser ? "user-message" : "bot-message");
+    msg.innerText = content;
+    chatBox.appendChild(msg);
+    chatBox.scrollTop = chatBox.scrollHeight;
+  }
+
+  function sendMessage() {
+    const input = document.getElementById("userInput");
+    const question = input.value.trim();
+    if (!question) return;
+
+    addMessage(question, true);
+    input.value = "";
+
+    // Placeholder: Replace with backend call to your RAG API
+    setTimeout(() => {
+      addMessage("🔍 Analyzing your question with the uploaded document...");
+      setTimeout(() => {
+        addMessage("Here’s my answer: [This would come from your backend AI]");
+      }, 1500);
+    }, 800);
+  }
+</script>
+
+</body>
+</html>
