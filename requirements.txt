@@ -1,0 +1,9 @@
+Flask
+flask-cors
+gunicorn
+langchain
+langchain-groq
+langchain-community
+faiss-cpu
+pypdf
+sentence-transformers
